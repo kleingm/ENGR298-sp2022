@@ -11,8 +11,8 @@ class CovidRecord:
         :param _county: County in which data was recorded
         :param _state: State in which data was recorded
         :param _fips: Federal Information Processing Standards code
-        :param _cases: Number of new cases recorded
-        :param _death: Number of new deaths recorded
+        :param _cases: Number of total cases recorded
+        :param _death: Number of total deaths recorded
         """
         self.date = _date
         self.county = _county
