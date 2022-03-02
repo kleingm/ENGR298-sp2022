@@ -17,10 +17,6 @@ def main(filepath):
     # save each vector as own variable
     ## your code here
 
-    # identify one column to process. Call that column signal
-
-    signal = -1 ## your code here
-
     # pass data through LOW PASS FILTER (OPTIONAL)
     ## your code here
 
@@ -36,6 +32,10 @@ def main(filepath):
     # pass through moving average window
     ## your code here
 
+    # take the output of the moving average and save it to 'signal' to it can be passed
+    # back to the testbench
+    signal = -1
+
     # use find_peaks to identify peaks within averaged/filtered data
     # save the peaks result and return as part of testbench result
     peaks = -1 ## your code here
@@ -48,7 +48,7 @@ def main(filepath):
 if __name__ == "__main__":
 
     #database name
-    database_name='mitdb_201'
+    database_name='mitdb_213'
 
     # set to true if you wish to generate a debug file
     file_debug = True
