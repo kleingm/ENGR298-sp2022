@@ -34,7 +34,7 @@ a = Vector(3, 1, -2)
 b = Vector(9, 2, 4)
 
 # treat the vectors as point as compute the distance between (should be 8.54)
-distance = 0 # your code here
+distance = 0
 print("Distance between ", a, " and ", b, " is ", distance)
 
 # treat vectors as vectors and compute the dot product (should be 21)

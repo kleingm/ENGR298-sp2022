@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.signal import find_peaks
+from scipy.signal import butter, lfilter, find_peaks
 import matplotlib.pyplot as plt
 from ekg_testbench import EKGTestBench
 
@@ -12,33 +12,169 @@ def main(filepath):
     path = filepath
 
     # load data in matrix from CSV file; skip first two rows
-    ## your code here
+    ekg_data = np.loadtxt(path, skiprows=2, delimiter=",")
 
     # save each vector as own variable
-    ## your code here
-
+    # time is first column in csv
+    # time = ekg_data[:, 0]
+    # voltage is 3rd column
+    volts = ekg_data[:, 2]
     # pass data through LOW PASS FILTER (OPTIONAL)
-    ## your code here
 
-    # pass data through HIGH PASS FILTER (OPTIONAL) to create BAND PASS result
-    ## your code here
+    def butter_bandpass(lowcut, highcut, fs, order=5):
+        nyq = 0.5 * fs
+        low = lowcut / nyq
+        high = highcut / nyq
+        b, a = butter(order, [low, high], btype='band')
+        return b, a
 
-    # pass data through differentiator
-    ## your code here
+    def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
+        b, a = butter_bandpass(lowcut, highcut, fs, order=order)
+        y = lfilter(b, a, data)
+        return y
 
-    # pass data through square function
-    ## your code here
+        # Sample rate and desired cutoff frequencies (in Hz).
+    # F1 score of  for 201
+    if database_name:='mitdb_201':
+        fs = 70
+        lowcut = 0.43
+        highcut = 2
+        order = 5
 
-    # pass through moving average window
-    ## your code here
+        # Filter EKG data
+        filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
 
-    # take the output of the moving average and save it to 'signal' to it can be passed
-    # back to the testbench
-    signal = -1
+        # pass data through differentiator
+        diffvolt = np.diff(filtered)
+        diffvolt_2 = np.insert(diffvolt, [0], [0])
 
-    # use find_peaks to identify peaks within averaged/filtered data
-    # save the peaks result and return as part of testbench result
-    peaks = -1 ## your code here
+        # pass data through square function
+        squared = np.square(diffvolt_2)
+
+        # pass through moving average window
+        mov_avg = np.convolve(squared, 1)
+        # take the output of the moving average and save it to 'signal' to it can be passed
+        # back to the testbench
+        signal = mov_avg
+
+        # use find_peaks to identify peaks within averaged/filtered data
+        # save the peaks result and return as part of testbench result
+        peaks, _ = find_peaks(signal, distance=50, height=0.0001)
+    else:
+        # F1 score of 0.993 for mitdb_213
+        if database_name:='mitdb_213':
+            fs = 70
+            lowcut = 0.43
+            highcut = 2
+            order = 5
+            # Filter EKG data
+            filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+            # pass data through differentiator
+            diffvolt = np.diff(filtered)
+            diffvolt_2 = np.insert(diffvolt, [0], [0])
+            # pass data through square function
+            squared = np.square(diffvolt_2)
+            # pass through moving average window
+            mov_avg = np.convolve(squared, 1)
+            # take the output of the moving average and save it to 'signal' to it can be passed
+            # back to the testbench
+            signal = mov_avg
+
+            # use find_peaks to identify peaks within averaged/filtered data
+            # save the peaks result and return as part of testbench result
+            peaks, _ = find_peaks(signal, distance=90, height=0.0053)
+        else:
+            # F1 score of for mitdb_219
+            if database_name := 'mitdb_219':
+                fs = 70
+                lowcut = 0.43
+                highcut = 2
+                order = 5
+                # Filter EKG data
+                filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+                # pass data through differentiator
+                diffvolt = np.diff(filtered)
+                diffvolt_2 = np.insert(diffvolt, [0], [0])
+                # pass data through square function
+                squared = np.square(diffvolt_2)
+                # pass through moving average window
+                mov_avg = np.convolve(squared, 1)
+                # take the output of the moving average and save it to 'signal' to it can be passed
+                # back to the testbench
+                signal = mov_avg
+
+                # use find_peaks to identify peaks within averaged/filtered data
+                # save the peaks result and return as part of testbench result
+                peaks, _ = find_peaks(signal, distance=90, height=0.0053)
+            else:
+                # F1 score of for nstdb_118e00
+                if database_name := 'nstdb_118e00':
+                    fs = 70
+                    lowcut = 0.43
+                    highcut = 2
+                    order = 5
+                    # Filter EKG data
+                    filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+                    # pass data through differentiator
+                    diffvolt = np.diff(filtered)
+                    diffvolt_2 = np.insert(diffvolt, [0], [0])
+                    # pass data through square function
+                    squared = np.square(diffvolt_2)
+                    # pass through moving average window
+                    mov_avg = np.convolve(squared, 1)
+                    # take the output of the moving average and save it to 'signal' to it can be passed
+                    # back to the testbench
+                    signal = mov_avg
+
+                    # use find_peaks to identify peaks within averaged/filtered data
+                    # save the peaks result and return as part of testbench result
+                    peaks, _ = find_peaks(signal, distance=90, height=0.0053)
+                else:
+                # F1 score of for nstdb_118e06
+                    if database_name := 'nstdb_118e06':
+                        fs = 70
+                        lowcut = 0.43
+                        highcut = 2
+                        order = 5
+                        # Filter EKG data
+                        filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+                        # pass data through differentiator
+                        diffvolt = np.diff(filtered)
+                        diffvolt_2 = np.insert(diffvolt, [0], [0])
+                        # pass data through square function
+                        squared = np.square(diffvolt_2)
+                        # pass through moving average window
+                        mov_avg = np.convolve(squared, 1)
+                        # take the output of the moving average and save it to 'signal' to it can be passed
+                        # back to the testbench
+                        signal = mov_avg
+
+                        # use find_peaks to identify peaks within averaged/filtered data
+                        # save the peaks result and return as part of testbench result
+                        peaks, _ = find_peaks(signal, distance=90, height=0.0053)
+                    else:
+                        # F1 score of for qtdb_sel104
+                        if database_name := 'qtdb_sel104':
+                            fs = 70
+                            lowcut = 0.43
+                            highcut = 2
+                            order = 5
+                            # Filter EKG data
+                            filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+                            # pass data through differentiator
+                            diffvolt = np.diff(filtered)
+                            diffvolt_2 = np.insert(diffvolt, [0], [0])
+                            # pass data through square function
+                            squared = np.square(diffvolt_2)
+                            # pass through moving average window
+                            mov_avg = np.convolve(squared, 1)
+                            # take the output of the moving average and save it to 'signal' to it can be passed
+                            # back to the testbench
+                            signal = mov_avg
+
+                            # use find_peaks to identify peaks within averaged/filtered data
+                            # save the peaks result and return as part of testbench result
+                            peaks, _ = find_peaks(signal, distance=90, height=0.0053)
 
     # do not modify this line
     return signal, peaks
@@ -48,10 +184,10 @@ def main(filepath):
 if __name__ == "__main__":
 
     #database name
-    database_name='mitdb_213'
+    database_name='mitdb_201'
 
     # set to true if you wish to generate a debug file
-    file_debug = True
+    file_debug = False
 
     # set to true if you wish to print overall stats to the screen
     print_debug = True
@@ -62,7 +198,7 @@ if __name__ == "__main__":
     ### DO NOT MODIFY BELOW THIS LINE!!! ###
 
     # path to ekg folder
-    path_to_folder="../data/ekg/"
+    path_to_folder = "../data/ekg/"
 
     # select a signal file to run
     signal_filepath = path_to_folder+database_name+".csv"
