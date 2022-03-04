@@ -8,6 +8,7 @@ def main(filepath):
     if filepath == '':
         return list()
 
+
     # import the CSV file using numpy
     path = filepath
 
@@ -35,6 +36,35 @@ def main(filepath):
 
         # Sample rate and desired cutoff frequencies (in Hz).
     # F1 score of  for 201
+<<<<<<< HEAD:forsyth_workspace/grace-qrs-solution.py
+    # fs = 70 lowcut = 0.43 highcut = 2 order = 5 height = 80 distance = 0.0005
+    # F1 score of for 213
+    # fs = 70 lowcut = 0.43 highcut = 2 order = 5 height = 90 distance = 0.0053
+    fs = 70
+    lowcut = 0.43
+    highcut = 2
+    order = 5
+
+    # Filter EKG data
+    filtered = butter_bandpass_filter(volts, lowcut, highcut, fs, order)
+
+    # pass data through differentiator
+    diffvolt = np.diff(filtered)
+    diffvolt_2 = np.insert(diffvolt, [0], [0])
+
+    # pass data through square function
+    squared = np.square(diffvolt_2)
+
+    # pass through moving average window
+    mov_avg = np.convolve(squared, 1)
+    # take the output of the moving average and save it to 'signal' to it can be passed
+    # back to the testbench
+    signal = mov_avg
+
+    # use find_peaks to identify peaks within averaged/filtered data
+    # save the peaks result and return as part of testbench result
+    peaks, _ = find_peaks(signal, distance=80, height=0.0005)
+=======
     if database_name:='mitdb_201':
         fs = 70
         lowcut = 0.43
@@ -62,6 +92,7 @@ def main(filepath):
         peaks, _ = find_peaks(signal, distance=70, height=0.0014)
 
 
+>>>>>>> origin/main:forsyth_workspace/test if statement ekg.py
 
     # do not modify this line
     return signal, peaks
