@@ -52,7 +52,7 @@ a = Vector(3, 1, -2)
 b = Vector(9, 2, 4)
 
 # use class methods to computer the distance (a,b). Should be 8.54
-distance = 0 #your code here
+distance = 0
 print("Distance between ", a, " and ", b, " is ", distance)
 
 # use class methods to compute the product a * b. Should be 21.
