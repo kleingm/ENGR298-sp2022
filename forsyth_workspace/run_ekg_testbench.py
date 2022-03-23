@@ -1,7 +1,7 @@
 import os
 import time
 from ekg_testbench import EKGTestBench
-from student_qrs_solution import main as student_main
+from workspace.student_qrs_solution import main as student_main
 
 
 if __name__ == "__main__":
