@@ -8,35 +8,43 @@ def calculate_pi(target_error):
         :return: Approximation of PI to specified error bound
         """
 
-    # initialize all the algorithm constants
-    a = ### your code here ###
-    b = ### your code here ###
-    t = ### your code here ###
-    p = ### your code here ###
+    def square(x): return x * x
+
+    # define variables from Gauss Legendre Algorithm
+    ao = 1
+    bo = 1 / math.sqrt(2)
+    to = 1 / 4
+    p = 1
+
+
+    # main (body) here to call your function. Do not modify below this line
+    target_error = 1E-10
 
     # keep track of current approximation and error
     approx = 0
     current_error = 100
-
+    count = 0
     # loop while your current error is larger than the target
     while abs(current_error) > target_error:
-        # calculate next state variables
-        a_ = ### your code here ###
-        b_ = ### your code here ###
-        t_ = ### your code here ###
-        p_ = ### your code here ###
+        a1 = (ao + bo) / 2
+        b1 = math.sqrt(bo * ao)
+        t1 = to - (p * square(ao - a1))
+        p1 = (2 * p)
+        pi = (square(a1 + b1)) / (4 * t1)
 
-        # calculate approximation
-        approx = ### your code here ###
+        current_error = abs(math.pi - pi)
+        count += 1
+        print("The value of pi for loop " + str(count) + " is: " + str(pi))
+        print("the difference between iteration " + str(count) + " is" + str(math.pi - pi))
 
-        # update state variables for the next iteration
-        a = ### your code here ###
-        b = ### your code here ###
-        t = ### your code here ###
-        p = ### your code here ###
+        ao=a1
+        bo=b1
+        to=t1
+        p=p1
 
-        # determine error
-        current_error = math.pi - approx
+    # calculate approximation
+    approx = pi
+
 
     return approx
 

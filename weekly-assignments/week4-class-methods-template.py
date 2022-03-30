@@ -32,9 +32,8 @@ class Vector:
         :param v: Another vector in three-space
         :return: Dot product of two vectors
         """
-        dot_product = 0
+        dot_product = self.x * v.x + self.y * v.y + self.z * v.z
 
-        ### your code here ###
         ### self will be this object, v will be the other vector that is pass to you
         ### calculate the dot product between this/self vector and the passed vector v
 
@@ -47,9 +46,7 @@ class Vector:
         :return: Distance between passed point and this one
         """
 
-        dist = 0
-
-        ### your code here ###
+        dist = sqrt((self.x - v.x) ** 2 + (self.y - v.y) ** 2 + (self.z - v.z) ** 2)
         ### self will be this object, v will be the other vector that is pass to you
         ### calculate the distance product between this/self vector and the passed vector v
 

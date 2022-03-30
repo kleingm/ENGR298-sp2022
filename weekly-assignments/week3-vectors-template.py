@@ -25,7 +25,8 @@ def dot_product(listA, listB):
     total = 0
 
     # loop through both lists and calculate the dot product
-    ### your code here ###
+    for i in range(len(listA)):
+        total += listA[i] * listB[i]
 
     # return the variable. Do not modify this line
     return total

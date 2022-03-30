@@ -1,5 +1,6 @@
 # bring in randomness cause we need it in our lives
 import random
+from statistics import stdev
 
 
 # copy in Dr. Forsyth's random list function for use
@@ -27,7 +28,17 @@ def main(list_A, list_B):
     # depending on which one you find, set it equal to "largest_list"
     largest_list = []
 
-    ### YOUR CODE HERE ###
+
+    # The two lists are samples from a random distribution.
+    # Print out whether List A or B has the larger standard deviation.
+    # use if statements
+    if stdev(list_A) > stdev(list_B):
+       largest_list = list_A
+    else:
+       largest_list = list_B
+
+    print("List A's standard deviation is " + str(stdev(list_A)))
+    print("List B's standard deviation is " + str(stdev(list_B)))
 
     # do not modify this line
     return largest_list

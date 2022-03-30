@@ -12,7 +12,7 @@ class Counter:
 
         :param _init: Initial counter value
         """
-        self.count = ...
+        self.count = _init
 
     def dec(self):
         """
@@ -21,7 +21,8 @@ class Counter:
         :return: None
         """
         # decrement self.count
-        ### your code here ###
+        self.count -= 1
+
         return None
 
     def inc(self):
@@ -31,7 +32,7 @@ class Counter:
         :return: None
         """
         # increment self.count
-        ### your code here ###
+        self.count += 1
         return None
 
     def get_count(self):
@@ -41,8 +42,8 @@ class Counter:
         :return: Current value of the counter
         """
         # return the value of self.count
-        ### your code here ###
-        return None
+
+        return self.count
 
 
 ### Main program begins here... ###

@@ -38,7 +38,7 @@ def compute_dot_product(v1, v2):
     # variable to hold the dot product result
     dot_product = 0
 
-    ### your code here ###
+    dot_product = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z)
 
     # do not modify this line
     return dot_product
@@ -55,7 +55,7 @@ def compute_distance(v1, v2):
     # variable to hold the calculated distance
     distance = 0
 
-    ### your code here ###
+    distance = sqrt((v2.x - v1.x) ** 2 + (v2.y - v1.y) ** 2 + (v2.z - v1.z) ** 2)
 
 
     # do not modify this line

@@ -24,8 +24,19 @@ def main(random_list):
     # do not modify their names
     evens_list = []
     odds_list = []
+    nums = random_list
 
-    ### Your code here ###
+    # scan the list nums and place odds and evens in different lists
+
+    for x in nums:
+        if (x % 2) == 0:
+            evens_list.append(x)
+        else:
+            odds_list.append(x)
+
+
+    print("Odds: ", odds_list)
+    print("Evens: ", evens_list)
 
 
     # do not modify this line
