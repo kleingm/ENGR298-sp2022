@@ -100,35 +100,41 @@ def calculate_elastic_modulus(strain, stress):
     intercept: y-intercept for linear region best fit of strain/stress data
     """
 
-    # dummy variables to check that the values are implemented. These should be over-written by your
-    # code throughout this method
-    linear_index = -1
-    slope = -1
-    intercept = -1
+    # dummy variables the function should over write
+    linear_index = None
+    slope = None
+    intercept = None
 
-    # Step 3a: find the point that is 40% of max strain
-    # replace the line below with your code to find the secant_strain
+    # Step 3a: find the point that is 40% of peak strain
+    # use from 0 to that value to create a linear plot
+
+    ### your code below ###
     secant_strain = -1
 
-    # Step 3b: find the index closes to that 40%
-    # take the diff of the whole array and use argmin to find the index where the closest
-    # value occurs
+    # Step 3b: find the intersection between 40% line and the curvey
+    # take the abs() difference between the stress vector and secant_straint point
 
-    # uncomment the line below and find the difference between stress and secant across all values
-    # diffs = np.abs(### your code here ###)
+    ### your code below ###
+    diffs = -1
 
-    # uncomment the line below and use np.argmin on the diffs array to find the index/location of the closest point
-    #linear_index = np.argmin(### your code here ###)
+    # use np.argmin() to find the minimum of the diffs array.
+    # this will be the INDEX of the point in stress-strain that is closest to
+    # secant_strain intersection
 
-    # Step 3c: down select to linear region for stress and strain using array slicing
-    # uncomment the lines below and use array slicing to select points between 0 and the linear index
-    # linear_stress = ### your code here ###
-    # linear_strain = ### your code here ###
+    # uncomment the line below and replace with your own
+    # linear_index = ....
+
+    # Step 3c: down select to linear region for stress and strain
+    # using list slicing. Uncomment lines below
+    # linear_stress = stress[# list slice#]
+    # linear_strain = strain[#list slice#]
 
     # Step 3d: find least squares fit to a line in the linear region
-    # use 1-degree polynominal fit (line)
-    # uncomment the line below and use np.polyfit to determine a best fit for the linear stress/strain regions
-    # slope, intercept = np.polyfit(### x array here ###, ### y array here ###, 1)
+    # use 1-degree polynominal fit (line) from np.polyfit
+    # save the slope and intercept so we can plot the line later
+
+    # uncomment the line below and call np.polyfit
+    # slope, intercept = ....
 
     return linear_index, slope, intercept
 
@@ -164,7 +170,7 @@ if __name__ == "__main__":
     # Step #1: Given the forces and sample diameter, calculate the strain
     stress = calculate_stress(force, sample_diameter)
 
-    if stress == None:
+    if stress is None:
         print("Error! No stress returned. Did you fill in the calculate_stress() method?")
         sys.exit(-1)
 
@@ -192,9 +198,9 @@ if __name__ == "__main__":
     # to determine elastic modulus
 
     linear_index, slope, intercept = calculate_elastic_modulus(strain, stress)
-
-    if linear_index==-1 or slope==-1 or intercept ==-1:
-        print("Error! You did not calculate the linear region or index correctly. Check the calculate_elastic_modulus() method.")
+    
+    if linear_index is None or slope is None or intercept is None:
+        print("Incorrect value determined by calculate_elastic_modulus() did you implement that function?")
         sys.exit(-1)
 
     print("Elastic Modulus is ", slope / 1000, 'GPa')
@@ -219,42 +225,4 @@ if __name__ == "__main__":
     plt.ylabel('Stress (MPa)')
     plt.title('Linear Region for Sample ' + sample_name + ' with best fit')
 
-    # compute line y=mx+b
-    best_fit_line = slope * linear_strain + intercept
-    plt.plot(linear_strain, best_fit_line, label="Best Linear Fit")
 
-    plt.legend()
-    plt.show()
-
-    ##### calculate yield strength #####
-    # https://professorkazarinoff.github.io/Engineering-Materials-Programming/07-Mechanical-Properties/calculate-yield-strength-programmatically.html
-
-    # next to find point that intersects y=m(x-0.002) + 0
-    offset = 0.002
-
-    # calculate the offset line
-    offset_line = slope * (strain - offset)
-
-    # measure distance from all points on graph to this line
-    distance = abs(stress - offset_line)
-    intercept_index = np.argmin(distance)
-
-    # create line parallel to linear region and find intersection with overall curve
-    plt.scatter(strain, stress, label="Stress - Strain")
-    plt.xlabel('Strain (%)')
-    plt.ylabel('Stress (MPa)')
-    plt.title('Stress-Strain Curve for Sample ' + sample_name + " with 0.2% Yield")
-
-    # plot yield line
-    plt.plot(strain, offset_line, label="0.2% Offset Yield")
-
-    # indicate point where yield intersects
-    plt.plot(strain[intercept_index], stress[intercept_index], marker='v', label="Yield Strength")
-
-    # since this will go on forever, constrain the axis
-    plt.xlim([-.001, max(strain)])
-    plt.ylim([0, 1.1 * max(stress)])
-    plt.legend()
-    plt.show()
-
-    print("Done!")
